@@ -10,6 +10,30 @@ from shapely.ops import polygonize, unary_union
 from pyproj import CRS
 import rasterio
 
+def reproject_gdf(gdf, epsg_code):
+    """Reprojects GeoDataFrame to CRS with EPSG code
+
+    Assigns WKT format of projection to EPSG code to GeoDataFrame.
+
+    Args:
+    gdf: GeoDataFrame with any geometry (e.g., Point, Line, Polygon)
+    epsg_code: EPSG code (integer)
+
+    Returns:
+        GeoDataFrame reprojected to new crs (based on EPSG code).
+    """
+    # Define CRS in WKT format using EPSG code
+    target_projection = CRS.from_epsg(epsg_code).to_wkt()
+
+    # Reproject GeoDataFrame to epsg_code
+    reprojected_gdf = gdf.to_crs(target_projection)
+
+    # Print message
+    print("GeoDataFrame now has the following CRS:\n")
+    print(reprojected_gdf.crs)
+
+    return reprojected_gdf
+
 def gdf_has_duplicate_rows(gdf):
     """Returns True if gdf GeoDataFrame has duplicate rows
 
