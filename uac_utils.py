@@ -293,6 +293,10 @@ def extract_map_URL_segment(map_number, dda_file):
         registration number and that regex pattern accounts for this.
     """
 
+    # Zero-padding for single-digit map numbers
+    if map_number < 10:
+        map_number = '0' + str(map_number)
+
     # Define pattern to search for map number PDF URL
     # Parentheses allow extraction of group/string we want
     pattern = r"\'..(/tendernotices_docs/\d+/{}_.*.pdf)".format(map_number)
